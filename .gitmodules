@@ -1,0 +1,3 @@
+[submodule "external/AI-Scientist"]
+	path = external/AI-Scientist
+	url = https://github.com/SakanaAI/AI-Scientist.git

@@ -1,0 +1,33 @@
+Expected Quality: Weak
+Title: Draft Note for Logistics AI Prioritization
+
+1. System Purpose
+This draft says an AI system will improve logistics priority decisions. The purpose is broad and does not define the administrative scope or explain what the system must not do.
+
+2. Intended Users
+The document says logistics personnel will use it. It does not define user roles, approval authority, or training.
+
+3. Data Sources
+The system will use logistics data from existing systems. The document does not identify source tables, data lineage, access controls, retention, or data quality checks.
+
+4. Model or System Evaluation
+The draft says the model was tried on sample data and seemed useful. It provides no validation metrics, no test design, and no comparison to a manual baseline.
+
+5. Human Oversight
+The document says humans are involved but does not describe human review, override, escalation, or audit procedures.
+
+6. Failure Modes
+No failure mode analysis is provided.
+
+7. Risk Mitigations
+The draft says risks are expected to be low. It does not provide mitigations, monitoring, incident response, or rollback.
+
+8. Privacy and Security Considerations
+Privacy and security are not discussed.
+
+9. Deployment Readiness
+The document proposes immediate deployment after leadership approval. No pilot, readiness threshold, or user training plan is included.
+
+10. Known Limitations
+The limitations section says more study may be needed but gives no concrete gaps.
+

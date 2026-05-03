@@ -1,0 +1,33 @@
+Expected Quality: Medium
+Title: Oversight Plan for Disaster Coordination Summary Tool
+
+1. System Purpose
+The tool summarizes disaster response requests for fictional government coordination staff. It is advisory and intended for administrative triage.
+
+2. Intended Users
+Coordination staff and supervisors use the summaries. Human approval is required before action, but escalation timing is not clear.
+
+3. Data Sources
+Inputs include municipal forms, shelter status spreadsheets, and phone-log summaries. The plan does not fully describe retention or redaction.
+
+4. Model or System Evaluation
+The team tested summaries against a small set of exercise records. Metrics include summary usefulness and factual error count. Stress testing is limited.
+
+5. Human Oversight
+Supervisors review high-priority summaries. Routine summaries may receive lighter review.
+
+6. Failure Modes
+The plan mentions duplicate requests and outdated shelter data. It does not fully cover mistranslation or network failure.
+
+7. Risk Mitigations
+Mitigations include manual review and source links. The training plan is incomplete.
+
+8. Privacy and Security Considerations
+The plan says personal data should be minimized, but privacy and security controls need more detail.
+
+9. Deployment Readiness
+A rehearsal is recommended before use. Rollback and support contacts are not fully specified.
+
+10. Known Limitations
+The plan needs clearer escalation timing, privacy controls, and training steps.
+

@@ -1,0 +1,33 @@
+Expected Quality: Medium
+Title: Safety Case for Logistics Request Sorting Tool
+
+1. System Purpose
+The system helps sort logistics requests for a fictional Japanese government support unit. It is meant to reduce administrative queue delays and is not intended for operational military planning.
+
+2. Intended Users
+Logistics staff can view the suggested priority order. The document says staff remain responsible for final decisions, but it does not clearly define who can override the tool or when escalation is required.
+
+3. Data Sources
+Inputs include request date, item category, stock level, and expected delivery window. The document identifies source systems but gives limited detail on data lineage and retention.
+
+4. Model or System Evaluation
+Evaluation uses one historical quarter and reports average queue delay. It does not include false high-priority and false low-priority rates. Robustness testing is limited to one demand spike scenario.
+
+5. Human Oversight
+Human review is expected but not fully specified. There is no named owner for override review.
+
+6. Failure Modes
+The document mentions stale stock data and emergency demand but does not map all failure modes to mitigations.
+
+7. Risk Mitigations
+The team proposes manual review for unusual requests and monthly monitoring. The rollback criteria are incomplete.
+
+8. Privacy and Security Considerations
+The tool avoids personal data in most cases. Access control is mentioned, but audit logging and encryption are not described.
+
+9. Deployment Readiness
+A pilot is proposed for one office. Deployment readiness depends on manager approval and basic user training.
+
+10. Known Limitations
+The tool may not generalize during disruptions. More robustness testing, human oversight detail, and rollback criteria are needed.
+

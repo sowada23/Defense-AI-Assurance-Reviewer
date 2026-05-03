@@ -1,0 +1,33 @@
+Expected Quality: Weak
+Title: Vehicle Maintenance AI Test Memo
+
+1. System Purpose
+The memo says the AI will predict vehicle maintenance problems. It does not state whether the tool is advisory or define its boundaries.
+
+2. Intended Users
+The memo says maintenance teams will use it. User roles and approval authority are not defined.
+
+3. Data Sources
+The model uses old maintenance data. The memo does not document data lineage, missingness, retention, or access control.
+
+4. Model or System Evaluation
+The model was tested on a small spreadsheet. The memo reports that results looked promising but provides no metrics, no validation split, no baseline, and no robustness testing.
+
+5. Human Oversight
+The memo does not explain whether a human can override the model or pause its use.
+
+6. Failure Modes
+Failure modes are not analyzed.
+
+7. Risk Mitigations
+No concrete mitigation plan is provided.
+
+8. Privacy and Security Considerations
+The memo does not discuss privacy or security.
+
+9. Deployment Readiness
+The memo recommends using the model next month. It has no pilot plan, monitoring plan, or rollback procedure.
+
+10. Known Limitations
+The memo says accuracy may improve later.
+

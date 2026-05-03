@@ -1,0 +1,33 @@
+Expected Quality: Strong
+Title: Oversight Plan for Disaster Response Coordination Assistant
+
+1. System Purpose
+This fictional assistant summarizes municipal requests during natural disaster response exercises. It supports administrative coordination and does not direct field units, allocate force, conduct surveillance, or make autonomous decisions.
+
+2. Intended Users
+Emergency coordination staff use summaries during drills and declared civil-support events. Human coordinators approve any resource request or public communication.
+
+3. Data Sources
+Inputs include request forms, shelter status reports, public infrastructure notices, and manually verified contact lists. Sensitive personal information is minimized and redacted where possible.
+
+4. Model or System Evaluation
+Evaluation uses tabletop exercise logs, multilingual summary checks, factual consistency review, and stress tests with duplicate or conflicting requests. Metrics include omission rate, hallucination rate, escalation accuracy, and human correction rate.
+
+5. Human Oversight
+All summaries are labeled as advisory. Coordinators can override, correct, or discard outputs. High-uncertainty summaries require second-person review.
+
+6. Failure Modes
+Failure modes include mistranslation, duplicate requests, outdated shelter capacity, conflicting reports, and unavailable network access. Each has a fallback process and owner.
+
+7. Risk Mitigations
+Mitigations include source citation, confidence labels, privacy redaction, manual fallback, audit logging, and post-exercise review.
+
+8. Privacy and Security Considerations
+Personal information is minimized. Access is role-based. Logs are encrypted and reviewed after each exercise.
+
+9. Deployment Readiness
+Deployment requires successful rehearsal, documented training, rollback criteria, and approval from civil-support governance staff.
+
+10. Known Limitations
+Translation quality should be monitored, especially after major system updates.
+

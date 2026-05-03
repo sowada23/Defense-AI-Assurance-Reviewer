@@ -1,0 +1,33 @@
+Expected Quality: Strong
+Title: Evaluation Report for Non-Combat Vehicle Maintenance Prediction
+
+1. System Purpose
+This fictional advisory model predicts maintenance needs for non-combat administrative vehicles. It supports scheduling and inventory planning only. It does not route vehicles, control vehicles, or make operational decisions.
+
+2. Intended Users
+Maintenance planners and fleet administrators use the output as a planning aid. A certified maintenance supervisor approves all work orders.
+
+3. Data Sources
+Inputs include odometer readings, maintenance history, inspection notes, parts replacement records, and non-sensitive vehicle category. Data lineage is documented by source system and update frequency.
+
+4. Model or System Evaluation
+Evaluation uses a temporal split, a site-level holdout, and subgroup checks by vehicle class. Metrics include precision, recall, calibration error, missed maintenance rate, unnecessary inspection rate, and lead time.
+
+5. Human Oversight
+The model flags candidates for review. Human supervisors can override predictions, require manual inspection, or pause model use. Override rates are reviewed monthly.
+
+6. Failure Modes
+Failure modes include delayed data entry, rare equipment classes, sensor gaps, and distribution shift after policy changes. Each failure mode has a mitigation and monitoring signal.
+
+7. Risk Mitigations
+Mitigations include confidence thresholds, manual fallback, quarterly recalibration, incident review, and a pause criterion for calibration drift.
+
+8. Privacy and Security Considerations
+The dataset excludes driver identity unless legally required for maintenance records. Records are encrypted, access is logged, and exports are reviewed.
+
+9. Deployment Readiness
+Readiness requires successful pilot performance, user training, security approval, rollback criteria, and documented support contacts.
+
+10. Known Limitations
+Evidence for rare equipment classes is limited. Continued monitoring after deployment is required.
+

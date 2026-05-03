@@ -1,0 +1,102 @@
+[
+  {
+    "document_id": "strong_logistics_ai_safety_case",
+    "domain": "defense logistics",
+    "document_type": "safety case",
+    "expected_quality": "strong",
+    "known_issues": [
+      "residual uncertainty during data drift",
+      "need periodic human review"
+    ]
+  },
+  {
+    "document_id": "medium_logistics_ai_safety_case",
+    "domain": "defense logistics",
+    "document_type": "safety case",
+    "expected_quality": "medium",
+    "known_issues": [
+      "human oversight is underspecified",
+      "limited robustness testing",
+      "deployment rollback criteria are incomplete"
+    ]
+  },
+  {
+    "document_id": "weak_logistics_ai_safety_case",
+    "domain": "defense logistics",
+    "document_type": "safety case",
+    "expected_quality": "weak",
+    "known_issues": [
+      "unclear human oversight",
+      "missing failure mode analysis",
+      "weak evaluation evidence",
+      "no privacy discussion"
+    ]
+  },
+  {
+    "document_id": "strong_maintenance_model_eval_report",
+    "domain": "non-combat vehicle maintenance",
+    "document_type": "model evaluation report",
+    "expected_quality": "strong",
+    "known_issues": [
+      "requires continued monitoring after deployment",
+      "limited evidence for rare equipment classes"
+    ]
+  },
+  {
+    "document_id": "medium_maintenance_model_eval_report",
+    "domain": "non-combat vehicle maintenance",
+    "document_type": "model evaluation report",
+    "expected_quality": "medium",
+    "known_issues": [
+      "metrics are incomplete",
+      "privacy controls are brief",
+      "failure escalation needs detail"
+    ]
+  },
+  {
+    "document_id": "weak_maintenance_model_eval_report",
+    "domain": "non-combat vehicle maintenance",
+    "document_type": "model evaluation report",
+    "expected_quality": "weak",
+    "known_issues": [
+      "weak evaluation evidence",
+      "no robustness testing",
+      "unclear data lineage",
+      "missing human override procedure"
+    ]
+  },
+  {
+    "document_id": "strong_disaster_response_oversight_plan",
+    "domain": "disaster response coordination",
+    "document_type": "oversight plan",
+    "expected_quality": "strong",
+    "known_issues": [
+      "needs rehearsal after major system updates",
+      "translation quality should be monitored"
+    ]
+  },
+  {
+    "document_id": "medium_disaster_response_oversight_plan",
+    "domain": "disaster response coordination",
+    "document_type": "oversight plan",
+    "expected_quality": "medium",
+    "known_issues": [
+      "unclear escalation timing",
+      "limited privacy detail",
+      "training plan is incomplete"
+    ]
+  },
+  {
+    "document_id": "weak_disaster_response_oversight_plan",
+    "domain": "disaster response coordination",
+    "document_type": "oversight plan",
+    "expected_quality": "weak",
+    "known_issues": [
+      "human oversight is underspecified",
+      "failure modes are incomplete",
+      "no deployment readiness criteria",
+      "privacy and security controls need more detail"
+    ]
+  }
+]
+

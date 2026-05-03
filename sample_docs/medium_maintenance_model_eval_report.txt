@@ -1,0 +1,33 @@
+Expected Quality: Medium
+Title: Maintenance Prediction Model Evaluation Summary
+
+1. System Purpose
+The model predicts which non-combat vehicles may need maintenance soon. It is intended for administrative scheduling support.
+
+2. Intended Users
+Fleet staff view predictions. Supervisors remain responsible for work orders, but the report does not describe exact approval and escalation steps.
+
+3. Data Sources
+The model uses maintenance logs, mileage, and inspection results. Data quality checks are described briefly, but lineage and retention are incomplete.
+
+4. Model or System Evaluation
+The report includes accuracy and recall on a historical sample. It does not report calibration, false positive operational burden, or performance by vehicle class.
+
+5. Human Oversight
+Supervisors review recommendations before action. Override tracking is planned but not yet implemented.
+
+6. Failure Modes
+The report mentions missing mileage data and delayed inspection logs. It does not include a full failure mode table.
+
+7. Risk Mitigations
+The team proposes manual review of low-confidence predictions and monthly monitoring.
+
+8. Privacy and Security Considerations
+The report says personal data should be avoided. Security access controls are not described in detail.
+
+9. Deployment Readiness
+A pilot is recommended, but success thresholds and rollback criteria are not specific.
+
+10. Known Limitations
+Metrics are incomplete, privacy controls are brief, and failure escalation needs detail.
+

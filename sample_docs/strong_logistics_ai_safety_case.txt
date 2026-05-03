@@ -1,0 +1,33 @@
+Expected Quality: Strong
+Title: Safety Case for Logistics Prioritization Decision Support
+
+1. System Purpose
+This fictional system ranks routine logistics requests for a Japanese government support office. It is advisory only and non-operational. It does not control vehicles, assign tactical missions, select targets, or make autonomous decisions.
+
+2. Intended Users
+Authorized logistics planners use the ranked queue during routine supply planning. A human supervisor approves any change to priority class. Users receive training on appropriate use, limitations, and escalation.
+
+3. Data Sources
+The system uses inventory age, delivery deadlines, maintenance status, depot capacity, and historical processing times. Data lineage is documented for each source. Access is role-based, and records with personal information are minimized.
+
+4. Model or System Evaluation
+Validation uses twelve months of historical administrative data, temporal holdout testing, and scenario tests for seasonal demand. Metrics include queue delay reduction, false high-priority rate, false low-priority rate, and human override frequency.
+
+5. Human Oversight
+Every recommendation is reviewed by a human planner. The system has no autonomous approval authority. Users can override any recommendation and must record a reason. Repeated overrides trigger model review.
+
+6. Failure Modes
+Known failure modes include stale inventory data, unusual disaster-response demand, depot closure, and drift in request patterns. Each failure mode has a mitigation owner, fallback procedure, and monitoring signal.
+
+7. Risk Mitigations
+Mitigations include daily data quality checks, weekly drift monitoring, quarterly assurance review, rollback to manual queue sorting, and incident reporting for harmful prioritization errors.
+
+8. Privacy and Security Considerations
+The system stores only the minimum administrative fields needed for prioritization. Access is logged and audited. Sensitive records are encrypted at rest. No classified or operational data is included.
+
+9. Deployment Readiness
+A limited pilot is approved only if validation metrics meet thresholds and the human override rate remains below the review trigger. Rollback criteria and user support channels are documented.
+
+10. Known Limitations
+The model may underperform during rare supply disruptions. The document requires periodic human review and additional monitoring for data drift after deployment.
+

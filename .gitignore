@@ -1,0 +1,43 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+credentials.json
+service-account*.json
+*.p12
+*.pfx
+
+# Python virtual environments and caches
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build and package artifacts
+build/
+dist/
+*.egg-info/
+
+# Generated outputs and logs
+outputs/
+*.log
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Node dependencies, if added later
+node_modules/

@@ -1,0 +1,33 @@
+Expected Quality: Weak
+Title: Disaster Response AI Oversight Draft
+
+1. System Purpose
+The draft says an AI assistant will help with disaster response coordination. It does not define what the tool is allowed to do or what it must not do.
+
+2. Intended Users
+The draft says staff will use it during emergencies. Roles, training, and approval authority are not defined.
+
+3. Data Sources
+The assistant will use reports and messages from several places. The draft does not document data sources, quality checks, retention, or redaction.
+
+4. Model or System Evaluation
+The draft says the assistant gave good summaries in a demo. It provides no metrics, no validation set, and no stress testing.
+
+5. Human Oversight
+The draft says people will remain involved but gives no review, override, escalation, or audit procedure.
+
+6. Failure Modes
+The draft does not analyze failure modes such as outdated information, duplicate requests, mistranslation, or missing data.
+
+7. Risk Mitigations
+No concrete mitigations are listed.
+
+8. Privacy and Security Considerations
+Privacy and security controls are not described.
+
+9. Deployment Readiness
+The draft suggests the tool is ready after a demo. It has no readiness criteria, pilot, training, monitoring, or rollback plan.
+
+10. Known Limitations
+The limitations section is empty.
+
