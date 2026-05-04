@@ -7,7 +7,7 @@ import os
 import unittest
 from unittest.mock import patch
 
-from review_defense_doc import call_gemini, call_ollama, extract_json_between_markers, repair_unquoted_rating_fractions, review_with_model_retries, review_with_openai_retries
+from review_defense_doc import call_gemini, call_ollama, extract_json_between_markers, repair_unquoted_rating_fractions, review_with_model_retries, review_with_openai_retries, strip_json_line_comments
 from review_schema import assert_valid_review, coerce_review, format_review_scores, validate_review
 
 
@@ -96,6 +96,15 @@ class ReviewSchemaTests(unittest.TestCase):
         self.assertEqual(coerced["Mission Clarity"], 3)
         assert_valid_review(coerced, "defense")
 
+    def test_half_point_rating_string_is_rounded_and_coerced(self) -> None:
+        review = copy.deepcopy(VALID_DEFENSE_REVIEW)
+        review["Mission Clarity"] = "3.5/4"
+        review["Operational Risk"] = "2.5/4"
+        coerced = coerce_review(review, "defense")
+        self.assertEqual(coerced["Mission Clarity"], 4)
+        self.assertEqual(coerced["Operational Risk"], 2)
+        assert_valid_review(coerced, "defense")
+
     def test_review_scores_are_formatted_with_denominators(self) -> None:
         formatted = format_review_scores(VALID_DEFENSE_REVIEW, "defense")
         self.assertEqual(formatted["Mission Clarity"], "3/4")
@@ -132,6 +141,15 @@ class ReviewSchemaTests(unittest.TestCase):
             '{"Mission Clarity": "3/4", "Overall": "7/10", "Confidence": "4/5"}',
         )
 
+    def test_repair_unquoted_decimal_rating_fractions(self) -> None:
+        text = '{"Mission Clarity": 3.5/4, "Overall": 7/10}'
+        repaired = repair_unquoted_rating_fractions(text)
+        self.assertEqual(repaired, '{"Mission Clarity": "3.5/4", "Overall": "7/10"}')
+
+    def test_strip_json_line_comments(self) -> None:
+        text = '{"url": "http://localhost:11434", "Score": "3/4" // model note\n}'
+        self.assertEqual(strip_json_line_comments(text), '{"url": "http://localhost:11434", "Score": "3/4" \n}')
+
     def test_extract_json_repairs_ollama_bare_rating_fractions(self) -> None:
         response = """THOUGHT:
 short
@@ -165,6 +183,34 @@ REVIEW JSON:
         self.assertEqual(extracted["Mission Clarity"], "3/4")
         self.assertEqual(extracted["Overall"], "7/10")
         self.assertEqual(extracted["Confidence"], "4/5")
+
+    def test_extract_json_repairs_ollama_inline_comment(self) -> None:
+        response = """```json
+{
+  "Summary": "A review summary.",
+  "Strengths": ["Clear purpose."],
+  "Weaknesses": ["Needs more evidence."],
+  "Mission Clarity": "3.5/4",
+  "Human Oversight": "4/4",
+  "Data Governance": "4/4",
+  "Privacy and Security": "4/4",
+  "Safety and Reliability": "3.5/4",
+  "Robustness Testing": "3/4",
+  "Failure Mode Coverage": "4/4",
+  "Legal and Policy Alignment": "3.5/4",
+  "Deployment Readiness": "3.5/4",
+  "Operational Risk": "2.5/4", // High risk due to rare supply disruptions
+  "Questions": ["What specific metrics are used?"],
+  "Recommended Improvements": ["Provide more concrete evidence."],
+  "Ethical Concerns": false,
+  "Overall": "7/10",
+  "Confidence": "4/5",
+  "Decision": "Needs Revision"
+}
+```"""
+        extracted = extract_json_between_markers(response)
+        coerced = coerce_review(extracted, "defense")
+        assert_valid_review(coerced, "defense")
 
 
 class RetryTests(unittest.TestCase):
