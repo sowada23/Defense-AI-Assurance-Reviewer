@@ -20,7 +20,7 @@ class ReviewSchemaError(ValueError):
 COMMON_STRING_FIELDS = ["Summary", "Decision"]
 COMMON_LIST_FIELDS = ["Strengths", "Weaknesses", "Questions"]
 COMMON_INT_FIELDS = {"Overall": (1, 10), "Confidence": (1, 5)}
-RATING_PATTERN = re.compile(r"^\s*(\d+)\s*/\s*(\d+)\s*$")
+RATING_PATTERN = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*/\s*(\d+)\s*$")
 
 DEFENSE_INT_FIELDS = {
     "Mission Clarity": (1, 4),
@@ -91,7 +91,10 @@ def coerce_review(review: dict[str, Any], rubric: str) -> dict[str, Any]:
         elif isinstance(value, str):
             match = RATING_PATTERN.match(value)
             if match and int(match.group(2)) == maximum:
-                coerced[field] = int(match.group(1))
+                numerator = float(match.group(1))
+                rounded_numerator = round(numerator)
+                if rounded_numerator == numerator or numerator % 1 == 0.5:
+                    coerced[field] = int(rounded_numerator)
     return coerced
 
 
