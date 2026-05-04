@@ -50,10 +50,39 @@ def load_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def strip_json_line_comments(json_text: str) -> str:
+    """Remove // comments outside JSON strings."""
+    output = []
+    in_string = False
+    escaped = False
+    index = 0
+    while index < len(json_text):
+        char = json_text[index]
+        next_char = json_text[index + 1] if index + 1 < len(json_text) else ""
+
+        if escaped:
+            output.append(char)
+            escaped = False
+        elif char == "\\" and in_string:
+            output.append(char)
+            escaped = True
+        elif char == '"':
+            output.append(char)
+            in_string = not in_string
+        elif char == "/" and next_char == "/" and not in_string:
+            while index < len(json_text) and json_text[index] not in "\r\n":
+                index += 1
+            continue
+        else:
+            output.append(char)
+        index += 1
+    return "".join(output)
+
+
 def repair_unquoted_rating_fractions(json_text: str) -> str:
     """Quote bare rating fractions in object values, e.g. "Overall": 7/10."""
     return re.sub(
-        r'(:\s*)([1-9]\d*)\s*/\s*([1-9]\d*)(\s*[,}\]])',
+        r'(:\s*)([1-9]\d*(?:\.\d+)?)\s*/\s*([1-9]\d*)(\s*[,}\]])',
         r'\1"\2/\3"\4',
         json_text,
     )
@@ -63,7 +92,7 @@ def parse_json_with_repairs(json_text: str) -> dict[str, Any]:
     try:
         return json.loads(json_text)
     except json.JSONDecodeError:
-        repaired = repair_unquoted_rating_fractions(json_text)
+        repaired = repair_unquoted_rating_fractions(strip_json_line_comments(json_text))
         if repaired == json_text:
             raise
         return json.loads(repaired)

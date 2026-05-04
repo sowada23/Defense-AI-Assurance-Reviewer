@@ -1,0 +1,6 @@
+# Optional cloud LLM providers.
+openai>=1.0.0
+google-genai>=0.3.0
+
+# Test runner. The tests also work with `python -m unittest`.
+pytest>=7.0.0
