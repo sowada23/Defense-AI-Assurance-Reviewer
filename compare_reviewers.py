@@ -15,12 +15,36 @@ from review_defense_doc import DEFAULT_GEMINI_MODEL, DEFAULT_OLLAMA_MODEL, DEFAU
 
 PROJECT_DIR = Path(__file__).resolve().parent
 SAMPLE_DOCS_DIR = PROJECT_DIR / "sample_docs"
+SAMPLE_DOC_LANGUAGE_DIRS = {
+    "en": SAMPLE_DOCS_DIR / "English",
+    "jp": SAMPLE_DOCS_DIR / "Japanese",
+}
 METADATA_PATH = PROJECT_DIR / "metadata" / "sample_doc_labels.json"
+METADATA_PATHS = {
+    "en": METADATA_PATH,
+    "jp": PROJECT_DIR / "metadata" / "sample_doc_labels_japanese.json",
+}
 OUTPUTS_DIR = PROJECT_DIR / "outputs"
 
 
-def load_metadata() -> list[dict[str, Any]]:
-    return json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+def load_metadata(language: str = "en") -> list[dict[str, Any]]:
+    try:
+        metadata_path = METADATA_PATHS[language]
+    except KeyError as exc:
+        valid = ", ".join(sorted(METADATA_PATHS))
+        raise ValueError(f"Unsupported metadata language: {language}. Choose one of: {valid}.") from exc
+    return json.loads(metadata_path.read_text(encoding="utf-8"))
+
+
+def resolve_sample_docs_dir(language: str) -> Path:
+    try:
+        docs_dir = SAMPLE_DOC_LANGUAGE_DIRS[language]
+    except KeyError as exc:
+        valid = ", ".join(sorted(SAMPLE_DOC_LANGUAGE_DIRS))
+        raise ValueError(f"Unsupported sample document language: {language}. Choose one of: {valid}.") from exc
+    if not docs_dir.is_dir():
+        raise FileNotFoundError(f"Sample document directory does not exist: {docs_dir}")
+    return docs_dir
 
 
 def issue_found(review: dict[str, Any], issue: str) -> bool:
@@ -87,7 +111,7 @@ def summarize(
 
 def json_write(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def sanitize_run_component(value: str) -> str:
@@ -147,6 +171,9 @@ def build_run_metadata(
         "temperature": args.temperature,
         "max_retries": args.max_retries,
         "retry_temperature": args.retry_temperature,
+        "document_language": args.language,
+        "sample_docs_dir": relative_to_project(resolve_sample_docs_dir(args.language)),
+        "metadata_file": relative_to_project(METADATA_PATHS[args.language]),
         "document_count": len(labels),
         "document_ids": [item["document_id"] for item in labels],
         "output_files": {name: relative_to_project(path) for name, path in output_files.items()},
@@ -168,10 +195,18 @@ def main() -> None:
     parser.add_argument("--output-dir", default=str(OUTPUTS_DIR))
     parser.add_argument("--run-name", help="Optional explicit name for this run folder.")
     parser.add_argument("--mock", action="store_true", help="Alias for --provider mock.")
+    parser.add_argument("--language", choices=["en", "jp"], default="en", help="Sample document language corpus.")
+    language_group = parser.add_mutually_exclusive_group()
+    language_group.add_argument("--en", action="store_true", help="Use English sample documents.")
+    language_group.add_argument("--jp", action="store_true", help="Use Japanese sample documents.")
     args = parser.parse_args()
 
     started_at = datetime.now(UTC)
     provider = "mock" if args.mock else args.provider
+    if args.en:
+        args.language = "en"
+    elif args.jp:
+        args.language = "jp"
     if args.model is None:
         if provider == "gemini":
             args.model = DEFAULT_GEMINI_MODEL
@@ -181,13 +216,14 @@ def main() -> None:
             args.model = DEFAULT_OPENAI_MODEL
     output_dir = Path(args.output_dir)
     run_dir = create_run_dir(output_dir, provider, args.model, args.run_name)
-    labels = load_metadata()
+    sample_docs_dir = resolve_sample_docs_dir(args.language)
+    labels = load_metadata(args.language)
     defense_reviews: dict[str, dict[str, Any]] = {}
     ml_reviews: dict[str, dict[str, Any]] = {}
 
     for item in labels:
         document_id = item["document_id"]
-        path = SAMPLE_DOCS_DIR / f"{document_id}.txt"
+        path = sample_docs_dir / f"{document_id}.txt"
         defense_reviews[document_id] = review_document(
             path,
             rubric="defense",
@@ -196,6 +232,7 @@ def main() -> None:
             temperature=args.temperature,
             max_retries=args.max_retries,
             retry_temperature=args.retry_temperature,
+            response_language=args.language,
         )
         ml_reviews[document_id] = review_document(
             path,
@@ -205,6 +242,7 @@ def main() -> None:
             temperature=args.temperature,
             max_retries=args.max_retries,
             retry_temperature=args.retry_temperature,
+            response_language=args.language,
         )
 
     summary = summarize(labels, defense_reviews, ml_reviews)
@@ -236,7 +274,7 @@ def main() -> None:
     )
     json_write(run_output_files["run_metadata"], metadata)
 
-    print(json.dumps(summary, indent=2))
+    print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"\nRun folder: {run_dir}")
 
 

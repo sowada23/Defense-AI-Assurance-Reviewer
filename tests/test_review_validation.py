@@ -7,7 +7,7 @@ import os
 import unittest
 from unittest.mock import patch
 
-from review_defense_doc import call_gemini, call_ollama, extract_json_between_markers, repair_unquoted_rating_fractions, review_with_model_retries, review_with_openai_retries, strip_json_line_comments
+from review_defense_doc import build_defense_prompt, build_ml_baseline_prompt, call_gemini, call_ollama, extract_json_between_markers, quality_hint, repair_unquoted_rating_fractions, review_with_model_retries, review_with_openai_retries, strip_json_line_comments
 from review_schema import assert_valid_review, coerce_review, format_review_scores, validate_review
 
 
@@ -58,6 +58,22 @@ def fenced_json(review: dict[str, object]) -> str:
 
 
 class ReviewSchemaTests(unittest.TestCase):
+    def test_defense_prompt_can_request_japanese_responses(self) -> None:
+        prompt = build_defense_prompt("本文", response_language="jp")
+
+        self.assertIn("Write THOUGHT and all natural-language JSON field values in Japanese.", prompt)
+        self.assertIn("Keep JSON field names", prompt)
+
+    def test_ml_prompt_can_request_japanese_responses(self) -> None:
+        prompt = build_ml_baseline_prompt("本文", response_language="jp")
+
+        self.assertIn("Write THOUGHT and all natural-language JSON field values in Japanese.", prompt)
+        self.assertIn("Respond in this exact format:", prompt)
+
+    def test_unsupported_response_language_is_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            build_defense_prompt("text", response_language="fr")
+
     def test_valid_defense_review(self) -> None:
         self.assertEqual(validate_review(VALID_DEFENSE_REVIEW, "defense"), [])
         assert_valid_review(VALID_DEFENSE_REVIEW, "defense")
@@ -65,6 +81,11 @@ class ReviewSchemaTests(unittest.TestCase):
     def test_valid_ml_review(self) -> None:
         self.assertEqual(validate_review(VALID_ML_REVIEW, "ml_baseline"), [])
         assert_valid_review(VALID_ML_REVIEW, "ml_baseline")
+
+    def test_quality_hint_accepts_japanese_labels(self) -> None:
+        self.assertEqual(quality_hint("想定品質: 強\nタイトル: テスト"), "strong")
+        self.assertEqual(quality_hint("想定品質: 中\nタイトル: テスト"), "medium")
+        self.assertEqual(quality_hint("想定品質: 弱\nタイトル: テスト"), "weak")
 
     def test_missing_required_field(self) -> None:
         review = copy.deepcopy(VALID_DEFENSE_REVIEW)

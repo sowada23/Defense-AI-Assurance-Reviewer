@@ -44,6 +44,13 @@ DEFAULT_OPENAI_MODEL = "gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-2.0-flash"
 DEFAULT_OLLAMA_MODEL = "llama3.2"
 DEFAULT_PROVIDER = "ollama"
+RESPONSE_LANGUAGE_INSTRUCTIONS = {
+    "en": "Write THOUGHT and all natural-language JSON field values in English.",
+    "jp": (
+        "Write THOUGHT and all natural-language JSON field values in Japanese. "
+        "Keep JSON field names, rating strings, booleans, and Decision enum values exactly as specified."
+    ),
+}
 
 
 def load_text(path: Path) -> str:
@@ -119,9 +126,20 @@ def parse_and_validate_review(response_text: str, rubric: str) -> dict[str, Any]
     return format_review_scores(review, rubric)
 
 
-def build_defense_prompt(document_text: str) -> str:
+def response_language_instruction(response_language: str) -> str:
+    try:
+        return RESPONSE_LANGUAGE_INSTRUCTIONS[response_language]
+    except KeyError as exc:
+        valid = ", ".join(sorted(RESPONSE_LANGUAGE_INSTRUCTIONS))
+        raise ValueError(f"Unsupported response language: {response_language}. Choose one of: {valid}.") from exc
+
+
+def build_defense_prompt(document_text: str, response_language: str = "en") -> str:
     rubric = load_text(DEFENSE_RUBRIC_PATH)
     return f"""{rubric}
+
+Response language:
+{response_language_instruction(response_language)}
 
 Here is the assurance document you are asked to review:
 
@@ -131,9 +149,12 @@ Here is the assurance document you are asked to review:
 """
 
 
-def build_ml_baseline_prompt(document_text: str) -> str:
+def build_ml_baseline_prompt(document_text: str, response_language: str = "en") -> str:
     rubric = load_text(ML_RUBRIC_PATH)
     return f"""{rubric}
+
+Response language:
+{response_language_instruction(response_language)}
 
 Respond in this exact format:
 
@@ -186,11 +207,11 @@ def keyword_score(document_text: str, positive_terms: list[str]) -> int:
 
 def quality_hint(document_text: str) -> str:
     lower = document_text.lower()
-    if "expected quality: strong" in lower or "strong" in lower[:120]:
+    if "expected quality: strong" in lower or "想定品質: 強" in document_text or "strong" in lower[:120] or "strong_" in lower:
         return "strong"
-    if "expected quality: medium" in lower or "medium" in lower[:120]:
+    if "expected quality: medium" in lower or "想定品質: 中" in document_text or "medium" in lower[:120] or "medium_" in lower:
         return "medium"
-    if "expected quality: weak" in lower or "weak" in lower[:120]:
+    if "expected quality: weak" in lower or "想定品質: 弱" in document_text or "weak" in lower[:120] or "weak_" in lower:
         return "weak"
     return "unknown"
 
@@ -206,16 +227,16 @@ def mock_defense_review(document_text: str, doc_name: str = "") -> dict[str, Any
         base = 1
 
     scores = {
-        "Mission Clarity": keyword_score(document_text, ["purpose", "users", "scope", "not intended", "limitations", "approval"]),
-        "Human Oversight": keyword_score(document_text, ["human", "review", "override", "escalation", "operator", "approval"]),
-        "Data Governance": keyword_score(document_text, ["data", "source", "retention", "lineage", "quality", "access"]),
-        "Privacy and Security": keyword_score(document_text, ["privacy", "security", "encrypted", "access", "audit", "personal"]),
-        "Safety and Reliability": keyword_score(document_text, ["safety", "reliability", "fallback", "monitoring", "incident", "threshold"]),
-        "Robustness Testing": keyword_score(document_text, ["robustness", "stress", "drift", "test", "scenario", "validation"]),
-        "Failure Mode Coverage": keyword_score(document_text, ["failure", "mode", "mitigation", "false", "fallback", "risk"]),
-        "Legal and Policy Alignment": keyword_score(document_text, ["legal", "policy", "compliance", "procurement", "audit", "approval"]),
-        "Deployment Readiness": keyword_score(document_text, ["deployment", "readiness", "pilot", "rollback", "monitoring", "training"]),
-        "Operational Risk": keyword_score(document_text, ["non-operational", "advisory", "human", "limited", "no autonomous", "risk"]),
+        "Mission Clarity": keyword_score(document_text, ["purpose", "users", "scope", "not intended", "limitations", "approval", "目的", "利用者", "範囲", "限界", "承認"]),
+        "Human Oversight": keyword_score(document_text, ["human", "review", "override", "escalation", "operator", "approval", "人間", "監督", "確認", "上書き", "エスカレーション", "承認"]),
+        "Data Governance": keyword_score(document_text, ["data", "source", "retention", "lineage", "quality", "access", "データ", "出所", "保持", "系譜", "品質", "アクセス"]),
+        "Privacy and Security": keyword_score(document_text, ["privacy", "security", "encrypted", "access", "audit", "personal", "プライバシー", "セキュリティ", "暗号化", "監査", "個人情報"]),
+        "Safety and Reliability": keyword_score(document_text, ["safety", "reliability", "fallback", "monitoring", "incident", "threshold", "安全", "信頼", "フォールバック", "監視", "インシデント", "閾値"]),
+        "Robustness Testing": keyword_score(document_text, ["robustness", "stress", "drift", "test", "scenario", "validation", "堅牢", "ストレス", "ドリフト", "試験", "シナリオ", "検証"]),
+        "Failure Mode Coverage": keyword_score(document_text, ["failure", "mode", "mitigation", "false", "fallback", "risk", "故障", "モード", "低減", "誤", "フォールバック", "リスク"]),
+        "Legal and Policy Alignment": keyword_score(document_text, ["legal", "policy", "compliance", "procurement", "audit", "approval", "法", "方針", "コンプライアンス", "調達", "監査", "承認"]),
+        "Deployment Readiness": keyword_score(document_text, ["deployment", "readiness", "pilot", "rollback", "monitoring", "training", "展開", "準備", "パイロット", "ロールバック", "監視", "訓練"]),
+        "Operational Risk": keyword_score(document_text, ["non-operational", "advisory", "human", "limited", "no autonomous", "risk", "非戦闘", "助言", "人間", "限定", "自律", "リスク"]),
     }
 
     # Keep mock outputs aligned with labels so tests are predictable.
@@ -225,11 +246,11 @@ def mock_defense_review(document_text: str, doc_name: str = "") -> dict[str, Any
     known_weaknesses = []
     lower = document_text.lower()
     checks = [
-        ("human oversight is underspecified", ["human", "override", "escalation"]),
-        ("failure modes are incomplete", ["failure", "mode", "mitigation"]),
-        ("privacy and security controls need more detail", ["privacy", "security", "access"]),
-        ("evaluation evidence is too thin", ["validation", "test", "metric"]),
-        ("deployment readiness lacks concrete rollback criteria", ["rollback", "deployment", "monitoring"]),
+        ("human oversight is underspecified", ["human", "override", "escalation", "人間", "上書き", "エスカレーション"]),
+        ("failure modes are incomplete", ["failure", "mode", "mitigation", "故障", "モード", "低減"]),
+        ("privacy and security controls need more detail", ["privacy", "security", "access", "プライバシー", "セキュリティ", "アクセス"]),
+        ("evaluation evidence is too thin", ["validation", "test", "metric", "検証", "試験", "指標"]),
+        ("deployment readiness lacks concrete rollback criteria", ["rollback", "deployment", "monitoring", "ロールバック", "展開", "監視"]),
     ]
     for weakness, terms in checks:
         if sum(1 for term in terms if term in lower) < 2:
@@ -474,7 +495,9 @@ def review_document(
     temperature: float = 0.1,
     max_retries: int = 2,
     retry_temperature: float | None = None,
+    response_language: str = "en",
 ) -> dict[str, Any]:
+    language_instruction = response_language_instruction(response_language)
     document_text = load_text(document_path)
     if provider == "mock":
         if rubric == "defense":
@@ -486,11 +509,11 @@ def review_document(
         return format_review_scores(review, rubric)
 
     if rubric == "defense":
-        prompt = build_defense_prompt(document_text)
-        system_prompt = DEFENSE_SYSTEM_PROMPT
+        prompt = build_defense_prompt(document_text, response_language=response_language)
+        system_prompt = f"{DEFENSE_SYSTEM_PROMPT} {language_instruction}"
     else:
-        prompt = build_ml_baseline_prompt(document_text)
-        system_prompt = ML_BASELINE_SYSTEM_PROMPT
+        prompt = build_ml_baseline_prompt(document_text, response_language=response_language)
+        system_prompt = f"{ML_BASELINE_SYSTEM_PROMPT} {language_instruction}"
 
     if provider == "openai":
         return review_with_model_retries(
@@ -544,6 +567,7 @@ def main() -> None:
     parser.add_argument("--max-retries", type=int, default=2)
     parser.add_argument("--retry-temperature", type=float)
     parser.add_argument("--mock", action="store_true", help="Alias for --provider mock.")
+    parser.add_argument("--language", choices=["en", "jp"], default="en", help="Review response language.")
     parser.add_argument("--output", help="Optional JSON output path.")
     args = parser.parse_args()
 
@@ -564,13 +588,14 @@ def main() -> None:
         temperature=args.temperature,
         max_retries=args.max_retries,
         retry_temperature=args.retry_temperature,
+        response_language=args.language,
     )
 
-    print(json.dumps(review, indent=2))
+    print(json.dumps(review, indent=2, ensure_ascii=False))
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(json.dumps(review, indent=2), encoding="utf-8")
+        output_path.write_text(json.dumps(review, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 if __name__ == "__main__":
