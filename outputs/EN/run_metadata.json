@@ -1,0 +1,37 @@
+{
+  "run_id": "llama3.1-8b-test-run2-2",
+  "status": "success",
+  "started_at": "2026-05-03T21:27:02.148516+00:00",
+  "finished_at": "2026-05-03T21:49:35.333059+00:00",
+  "duration_seconds": 1353.185,
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "temperature": 0.1,
+  "max_retries": 2,
+  "retry_temperature": null,
+  "document_language": "en",
+  "sample_docs_dir": "sample_docs/english",
+  "document_count": 9,
+  "document_ids": [
+    "strong_logistics_ai_safety_case",
+    "medium_logistics_ai_safety_case",
+    "weak_logistics_ai_safety_case",
+    "strong_maintenance_model_eval_report",
+    "medium_maintenance_model_eval_report",
+    "weak_maintenance_model_eval_report",
+    "strong_disaster_response_oversight_plan",
+    "medium_disaster_response_oversight_plan",
+    "weak_disaster_response_oversight_plan"
+  ],
+  "output_files": {
+    "defense_reviews": "outputs/llama3.1-8b-test-run2-2/defense_reviews.json",
+    "ml_baseline_reviews": "outputs/llama3.1-8b-test-run2-2/ml_baseline_reviews.json",
+    "comparison_summary": "outputs/llama3.1-8b-test-run2-2/comparison_summary.json",
+    "run_metadata": "outputs/llama3.1-8b-test-run2-2/run_metadata.json"
+  },
+  "legacy_output_files": {
+    "defense_reviews": "outputs/defense_reviews.json",
+    "ml_baseline_reviews": "outputs/ml_baseline_reviews.json",
+    "comparison_summary": "outputs/comparison_summary.json"
+  }
+}

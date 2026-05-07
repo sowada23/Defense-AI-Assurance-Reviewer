@@ -1,0 +1,267 @@
+{
+  "strong_logistics_ai_safety_case": {
+    "Summary": "",
+    "Strengths": [
+      "補給優先順位付け支援システムの安全性を考慮した設計と評価について詳細に説明されている",
+      "各章で明確な目標や利用者、データソースなどが述べられている"
+    ],
+    "Weaknesses": [
+      "オリジナリティは低く感じられる",
+      "質感も低く感じられる",
+      "評価指標の選択が適切かどうか疑問がある"
+    ],
+    "Originality": "2/4",
+    "Quality": "2/4",
+    "Clarity": "3/4",
+    "Significance": "2/4",
+    "Soundness": "2/4",
+    "Presentation": "3/4",
+    "Contribution": "2/4",
+    "Questions": [
+      "評価指標の選択は適切かどうか?",
+      "システムの性能が低下する可能性がある限界について、より具体的に説明してほしい"
+    ],
+    "Limitations": [
+      "まれな供給途絶時には性能が低下する可能性がある",
+      "定期的な人間によるレビューとデータドリフト監視が必要である"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "4/10",
+    "Confidence": "3/5",
+    "Decision": "Reject"
+  },
+  "medium_logistics_ai_safety_case": {
+    "Summary": "",
+    "Strengths": [
+      "システムの目的とデータソースについて明確に説明されている",
+      "例外的な依頼の手動確認と月次モニタリングを提案している"
+    ],
+    "Weaknesses": [
+      "人間による監督や故障モードについて不十分な情報しか提供されていない",
+      "ロールバック基準が未完成である",
+      "監査ログと暗号化について十分に記載されていない"
+    ],
+    "Originality": "2/4",
+    "Quality": "2/4",
+    "Clarity": "3/4",
+    "Significance": "2/4",
+    "Soundness": "2/4",
+    "Presentation": "2/4",
+    "Contribution": "2/4",
+    "Questions": [
+      "人間による監督の責任者や記録方法は明確なのか?",
+      "故障モードと低減策の対応表は不完全である"
+    ],
+    "Limitations": [
+      "供給途絶時に一般化しない可能性がある",
+      "堅牢性試験、人間による監督、ロールバック基準を補強する必要がある"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "4/10",
+    "Confidence": "3/5",
+    "Decision": "Reject"
+  },
+  "weak_logistics_ai_safety_case": {
+    "Summary": "",
+    "Strengths": [],
+    "Weaknesses": [
+      "目的が明確でない",
+      "利用者の役割や承認権限の定義が不足している",
+      "データソースについて具体的な表やデータ系譜、アクセス制御、保持期間、品質確認が示されていない",
+      "モデルまたはシステム評価では検証指標や試験設計、手動処理との比較が欠けている",
+      "人間による監督や故障モードの分析、リスク低減策も不足している",
+      "プライバシーとセキュリティについては議論されていない",
+      "展開準備についても幹部承認後に直ちに展開する提案があるが、パイロットや準備閾値、利用者訓練計画がない"
+    ],
+    "Originality": "1/4",
+    "Quality": "2/4",
+    "Clarity": "2/4",
+    "Significance": "2/4",
+    "Soundness": "1/4",
+    "Presentation": "2/4",
+    "Contribution": "2/4",
+    "Questions": [],
+    "Limitations": [
+      "目的の明確化",
+      "利用者の役割や承認権限の定義",
+      "データソースの具体化",
+      "モデルまたはシステム評価の改善",
+      "人間による監督の実施",
+      "故障モードの分析とリスク低減策",
+      "プライバシーとセキュリティの議論",
+      "展開準備の強化"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "3/10",
+    "Confidence": "2/5",
+    "Decision": "Reject"
+  },
+  "strong_maintenance_model_eval_report": {
+    "Summary": "",
+    "Strengths": [],
+    "Weaknesses": [
+      "オリジナリティが低い",
+      "内容が実際の研究結果や新しいアイデアではなく、基礎となるシステムやデータソースについての説明であることが多い"
+    ],
+    "Originality": "1/4",
+    "Quality": "2/4",
+    "Clarity": "3/4",
+    "Significance": "1/4",
+    "Soundness": "2/4",
+    "Presentation": "3/4",
+    "Contribution": "1/4",
+    "Questions": [],
+    "Limitations": [
+      "希少車種に関する証拠が限定的である"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "2/10",
+    "Confidence": "3/5",
+    "Decision": "Reject"
+  },
+  "medium_maintenance_model_eval_report": {
+    "Summary": "",
+    "Strengths": [
+      "車両管理担当者が予測を見ることができる",
+      "低信頼予測の手動確認と月次監視を提案している"
+    ],
+    "Weaknesses": [
+      "データ品質の確認や系譜と保持期間について不完全な説明がある",
+      "較正や誤検知による業務負荷について報告していない",
+      "故障モード表が不完全である",
+      "プライバシー管理は簡略であり、故障時のエスカレーションに詳細が必要である"
+    ],
+    "Originality": "2/4",
+    "Quality": "2/4",
+    "Clarity": "3/4",
+    "Significance": "2/4",
+    "Soundness": "1/4",
+    "Presentation": "3/4",
+    "Contribution": "2/4",
+    "Questions": [
+      "データ品質の確認や系譜と保持期間について詳しく説明してください。",
+      "較正や誤検知による業務負荷についてどうやって考えていますか?"
+    ],
+    "Limitations": [
+      "指標が不完全である",
+      "プライバシー管理は簡略である"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "4/10",
+    "Confidence": "3/5",
+    "Decision": "Reject"
+  },
+  "weak_maintenance_model_eval_report": {
+    "Summary": "",
+    "Strengths": [],
+    "Weaknesses": [
+      "システムの目的や利用者の役割が明確に説明されていない",
+      "データソースやモデル評価、人間による監督など安全性と信頼性を確保するための要件が満たされていない"
+    ],
+    "Originality": "1/4",
+    "Quality": "2/4",
+    "Clarity": "2/4",
+    "Significance": "1/4",
+    "Soundness": "1/4",
+    "Presentation": "3/4",
+    "Contribution": "1/4",
+    "Questions": [
+      "システムの目的や利用者の役割を明確に説明してください。",
+      "データソースやモデル評価、人間による監督など安全性と信頼性を確保するための要件を満たすようにしてください。"
+    ],
+    "Limitations": [
+      "精度は後で改善できるかもしれない",
+      "故障モードの分析が不足している"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "3/10",
+    "Confidence": "2/5",
+    "Decision": "Reject"
+  },
+  "strong_disaster_response_oversight_plan": {
+    "Summary": "",
+    "Strengths": [
+      "災害対応調整支援アシスタントの監督計画について詳細に説明している",
+      "システムの目的や想定利用者など、さまざまな側面を網羅している"
+    ],
+    "Weaknesses": [
+      "原著性が十分ではない",
+      "質感が低い",
+      "重要性が不明瞭"
+    ],
+    "Originality": "2/4",
+    "Quality": "2/4",
+    "Clarity": "3/4",
+    "Significance": "1/4",
+    "Soundness": "2/4",
+    "Presentation": "3/4",
+    "Contribution": "2/4",
+    "Questions": [
+      "原著性の低さについて説明してほしい",
+      "質感の向上策を提案してほしい"
+    ],
+    "Limitations": [
+      "大規模なシステム更新後は、翻訳品質と要約品質を再確認する必要がある"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "4/10",
+    "Confidence": "3/5",
+    "Decision": "Reject"
+  },
+  "medium_disaster_response_oversight_plan": {
+    "Summary": "",
+    "Strengths": [
+      "システムの目的が明確に説明されている",
+      "想定利用者について簡潔に説明されている"
+    ],
+    "Weaknesses": [
+      "データソースやモデルまたはシステム評価について不明瞭である",
+      "人間による監督や故障モードについて十分な説明がない",
+      "プライバシーとセキュリティ管理が詳細不足である",
+      "展開準備や既知の限界について具体的な内容が示されていない"
+    ],
+    "Originality": "2/4",
+    "Quality": "2/4",
+    "Clarity": "1/4",
+    "Significance": "2/4",
+    "Soundness": "1/4",
+    "Presentation": "2/4",
+    "Contribution": "2/4",
+    "Questions": [
+      "データソースやモデルまたはシステム評価について詳しく説明してください。",
+      "人間による監督や故障モードについて具体的な内容を示してください。"
+    ],
+    "Limitations": [
+      "プライバシーとセキュリティ管理が詳細不足である",
+      "展開準備や既知の限界について具体的な内容が示されていない"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "4/10",
+    "Confidence": "3/5",
+    "Decision": "Reject"
+  },
+  "weak_disaster_response_oversight_plan": {
+    "Summary": "",
+    "Strengths": [],
+    "Weaknesses": [
+      "システムの目的や利用者、データソースなどについては簡潔に説明されているものの、評価方法や故障モード、リスク低減策などの重要な点については明確な記載がない",
+      "具体的な設計や実装について十分な情報が提供されていない"
+    ],
+    "Originality": "1/4",
+    "Quality": "2/4",
+    "Clarity": "3/4",
+    "Significance": "2/4",
+    "Soundness": "1/4",
+    "Presentation": "2/4",
+    "Contribution": "1/4",
+    "Questions": [
+      "評価方法や故障モード、リスク低減策などの重要な点についてはどうする?",
+      "具体的な設計や実装についてもっと詳しく説明してほしい"
+    ],
+    "Limitations": [],
+    "Ethical Concerns": false,
+    "Overall": "3/10",
+    "Confidence": "2/5",
+    "Decision": "Reject"
+  }
+}

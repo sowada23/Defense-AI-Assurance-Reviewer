@@ -1,0 +1,138 @@
+{
+  "research_question": "Can an AI Scientist-style Automated Reviewer be repurposed from ML paper review into a structured assurance reviewer for Japanese defense AI governance documents?",
+  "rows": [
+    {
+      "document_id": "strong_logistics_ai_safety_case",
+      "expected_quality": "strong",
+      "ml_overall": "4/10",
+      "defense_overall": "7/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 0,
+      "known_issues_total": 2
+    },
+    {
+      "document_id": "medium_logistics_ai_safety_case",
+      "expected_quality": "medium",
+      "ml_overall": "2/10",
+      "defense_overall": "6/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 3,
+      "known_issues_total": 3
+    },
+    {
+      "document_id": "weak_logistics_ai_safety_case",
+      "expected_quality": "weak",
+      "ml_overall": "2/10",
+      "defense_overall": "2/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 4,
+      "known_issues_total": 4
+    },
+    {
+      "document_id": "strong_maintenance_model_eval_report",
+      "expected_quality": "strong",
+      "ml_overall": "4/10",
+      "defense_overall": "7/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 2,
+      "known_issues_total": 2
+    },
+    {
+      "document_id": "medium_maintenance_model_eval_report",
+      "expected_quality": "medium",
+      "ml_overall": "4/10",
+      "defense_overall": "6/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 2,
+      "known_issues_total": 3
+    },
+    {
+      "document_id": "weak_maintenance_model_eval_report",
+      "expected_quality": "weak",
+      "ml_overall": "2/10",
+      "defense_overall": "2/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 4,
+      "known_issues_total": 4
+    },
+    {
+      "document_id": "strong_disaster_response_oversight_plan",
+      "expected_quality": "strong",
+      "ml_overall": "5/10",
+      "defense_overall": "6/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 1,
+      "known_issues_total": 2
+    },
+    {
+      "document_id": "medium_disaster_response_oversight_plan",
+      "expected_quality": "medium",
+      "ml_overall": "4/10",
+      "defense_overall": "5/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 3,
+      "known_issues_total": 3
+    },
+    {
+      "document_id": "weak_disaster_response_oversight_plan",
+      "expected_quality": "weak",
+      "ml_overall": "2/10",
+      "defense_overall": "2/10",
+      "defense_decision": "Needs Revision",
+      "known_issues_found": 4,
+      "known_issues_total": 4
+    }
+  ],
+  "score_alignment": [
+    {
+      "expected_quality": "weak",
+      "document_id": "weak_logistics_ai_safety_case",
+      "defense_overall": "2/10"
+    },
+    {
+      "expected_quality": "weak",
+      "document_id": "weak_maintenance_model_eval_report",
+      "defense_overall": "2/10"
+    },
+    {
+      "expected_quality": "weak",
+      "document_id": "weak_disaster_response_oversight_plan",
+      "defense_overall": "2/10"
+    },
+    {
+      "expected_quality": "medium",
+      "document_id": "medium_logistics_ai_safety_case",
+      "defense_overall": "6/10"
+    },
+    {
+      "expected_quality": "medium",
+      "document_id": "medium_maintenance_model_eval_report",
+      "defense_overall": "6/10"
+    },
+    {
+      "expected_quality": "medium",
+      "document_id": "medium_disaster_response_oversight_plan",
+      "defense_overall": "5/10"
+    },
+    {
+      "expected_quality": "strong",
+      "document_id": "strong_logistics_ai_safety_case",
+      "defense_overall": "7/10"
+    },
+    {
+      "expected_quality": "strong",
+      "document_id": "strong_maintenance_model_eval_report",
+      "defense_overall": "7/10"
+    },
+    {
+      "expected_quality": "strong",
+      "document_id": "strong_disaster_response_oversight_plan",
+      "defense_overall": "6/10"
+    }
+  ],
+  "notes": [
+    "The ML baseline is intentionally mismatched to assurance documents.",
+    "The defense reviewer is expected to produce more domain-relevant weaknesses and recommendations.",
+    "Mock mode is deterministic and intended for local testing before real LLM runs."
+  ]
+}

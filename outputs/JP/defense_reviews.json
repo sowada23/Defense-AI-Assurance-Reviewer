@@ -1,0 +1,324 @@
+{
+  "strong_logistics_ai_safety_case": {
+    "Summary": "補給優先順位付け支援システムの安全性を確保するためのガイドライン",
+    "Strengths": [
+      "安全性を確保するための適切な措置が講じられている",
+      "データソースとモデルまたはシステム評価について詳細に記載されている",
+      "人間による監督と故障モードに対する対策が十分である"
+    ],
+    "Weaknesses": [
+      "既知の限界について明確に記載されていない",
+      "展開準備についてさらに具体的な情報が必要である"
+    ],
+    "Mission Clarity": "3/4",
+    "Human Oversight": "4/4",
+    "Data Governance": "3/4",
+    "Privacy and Security": "4/4",
+    "Safety and Reliability": "3/4",
+    "Robustness Testing": "2/4",
+    "Failure Mode Coverage": "3/4",
+    "Legal and Policy Alignment": "2/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "2/4",
+    "Questions": [
+      "既知の限界について明確に記載する必要性を考慮する",
+      "展開準備についてさらに具体的な情報が必要である"
+    ],
+    "Recommended Improvements": [
+      "既知の限界について明確に記載する",
+      "展開準備についてさらに具体的な情報を追加する"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "7/10",
+    "Confidence": "4/5",
+    "Decision": "Needs Revision"
+  },
+  "medium_logistics_ai_safety_case": {
+    "Summary": "補給依頼分類ツールの安全ケース",
+    "Strengths": [
+      "システムの目的と利用者が明確に定義されている",
+      "データソースやモデル評価について基本的な情報が記載されている"
+    ],
+    "Weaknesses": [
+      "人間による監督が不十分",
+      "故障モードの対応が不完全",
+      "リスク低減策が不足している",
+      "展開準備が管理者承認と基本訓練に依存しており、合格基準が明確ではない"
+    ],
+    "Mission Clarity": "3/4",
+    "Human Oversight": "2/4",
+    "Data Governance": "3/4",
+    "Privacy and Security": "2/4",
+    "Safety and Reliability": "2/4",
+    "Robustness Testing": "1/4",
+    "Failure Mode Coverage": "2/4",
+    "Legal and Policy Alignment": "3/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "1/4",
+    "Questions": [
+      "人間による監督の責任者は誰か?",
+      "故障モードと低減策の対応表を完成させる必要がある"
+    ],
+    "Recommended Improvements": [
+      "人間による監督を強化する",
+      "故障モードの対応を完了する",
+      "リスク低減策を充実させる",
+      "展開準備を管理者承認と基本訓練に依存せず、合格基準を明確にする"
+    ],
+    "Ethical Concerns": true,
+    "Overall": "5/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  },
+  "weak_logistics_ai_safety_case": {
+    "Summary": "補給AI優先順位付けに関する草案メモ",
+    "Strengths": [],
+    "Weaknesses": [
+      "目的の定義が不足している",
+      "利用者の役割や承認権限が明確ではない",
+      "データソースの具体性が欠けている",
+      "モデルまたはシステム評価の検証指標が示されていない"
+    ],
+    "Mission Clarity": "1/4",
+    "Human Oversight": "2/4",
+    "Data Governance": "1/4",
+    "Privacy and Security": "1/4",
+    "Safety and Reliability": "1/4",
+    "Robustness Testing": "1/4",
+    "Failure Mode Coverage": "1/4",
+    "Legal and Policy Alignment": "2/4",
+    "Deployment Readiness": "1/4",
+    "Operational Risk": "1/4",
+    "Questions": [
+      "目的の定義を明確にし、利用者の役割や承認権限を示す必要があります。",
+      "データソースの具体性を示し、モデルまたはシステム評価の検証指標を示す必要があります。"
+    ],
+    "Recommended Improvements": [
+      "目的の定義を明確にする",
+      "利用者の役割や承認権限を示す",
+      "データソースの具体性を示す",
+      "モデルまたはシステム評価の検証指標を示す"
+    ],
+    "Ethical Concerns": true,
+    "Overall": "3/10",
+    "Confidence": "2/5",
+    "Decision": "Needs Revision"
+  },
+  "strong_maintenance_model_eval_report": {
+    "Summary": "非戦闘車両整備予測モデル評価報告書",
+    "Strengths": [
+      "人間による監督と故障モードの検討が十分に行われている",
+      "プライバシーとセキュリティの対策が適切である"
+    ],
+    "Weaknesses": [
+      "データソースの文書化が不足している",
+      "展開準備に関する詳細が不足している"
+    ],
+    "Mission Clarity": "3/4",
+    "Human Oversight": "4/4",
+    "Data Governance": "2/4",
+    "Privacy and Security": "4/4",
+    "Safety and Reliability": "3/4",
+    "Robustness Testing": "3/4",
+    "Failure Mode Coverage": "3/4",
+    "Legal and Policy Alignment": "3/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "2/4",
+    "Questions": [
+      "データソースの文書化について詳細に説明してください。",
+      "展開準備に関する詳細を追加してください。"
+    ],
+    "Recommended Improvements": [
+      "データソースの文書化を改善する",
+      "展開準備に関する詳細を追加する"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "6/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  },
+  "medium_maintenance_model_eval_report": {
+    "Summary": "整備予測モデル評価概要",
+    "Strengths": [
+      "データソースを使用して過去データに対する正解率と再現率を示している。",
+      "低信頼予測の手動確認と月次監視を提案している。"
+    ],
+    "Weaknesses": [
+      "システムの目的が明確でない",
+      "想定利用者の説明が不足している",
+      "データソースの品質確認が不完全である",
+      "人間による監督が十分ではない",
+      "故障モード表現が不完全である"
+    ],
+    "Mission Clarity": "2/4",
+    "Human Oversight": "1/4",
+    "Data Governance": "2/4",
+    "Privacy and Security": "3/4",
+    "Safety and Reliability": "2/4",
+    "Robustness Testing": "2/4",
+    "Failure Mode Coverage": "1/4",
+    "Legal and Policy Alignment": "3/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "2/4",
+    "Questions": [
+      "システムの目的を明確にする必要がある。",
+      "想定利用者の説明が不足しているため、追加情報が必要である。",
+      "データソースの品質確認を改善する必要がある。"
+    ],
+    "Recommended Improvements": [
+      "システムの目的を明確にする",
+      "想定利用者の説明を充実させる",
+      "データソースの品質確認を改善する"
+    ],
+    "Ethical Concerns": true,
+    "Overall": "6/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  },
+  "weak_maintenance_model_eval_report": {
+    "Summary": "車両整備AIの試験メモ",
+    "Strengths": [],
+    "Weaknesses": [
+      "品質は低い",
+      "システムの目的や利用者の役割が不明瞭",
+      "データソースの管理が不足している",
+      "モデルまたはシステム評価が不十分",
+      "人間による監督が不明瞭",
+      "故障モードの分析が欠けている",
+      "リスク低減策が具体的になっていない",
+      "プライバシーとセキュリティに関する記載がない",
+      "展開準備が不足している"
+    ],
+    "Mission Clarity": "1/4",
+    "Human Oversight": "2/4",
+    "Data Governance": "1/4",
+    "Privacy and Security": "1/4",
+    "Safety and Reliability": "2/4",
+    "Robustness Testing": "1/4",
+    "Failure Mode Coverage": "1/4",
+    "Legal and Policy Alignment": "1/4",
+    "Deployment Readiness": "1/4",
+    "Operational Risk": "1/4",
+    "Questions": [
+      "システムの目的や利用者の役割を明確に説明してください。",
+      "データソースの管理について具体的な計画を立ててください。",
+      "人間による監督がどのように行われるかを説明してください。"
+    ],
+    "Recommended Improvements": [
+      "品質を向上させるための具体的な計画を立てる",
+      "システムの目的や利用者の役割を明確に説明する",
+      "データソースの管理について具体的な計画を立てる",
+      "人間による監督がどのように行われるかを説明する"
+    ],
+    "Ethical Concerns": true,
+    "Overall": "2/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  },
+  "strong_disaster_response_oversight_plan": {
+    "Summary": "災害対応調整支援アシスタントの監督計画",
+    "Strengths": [
+      "システムの目的が明確に記載されている",
+      "データソースが具体的に定義されている",
+      "モデルまたはシステム評価が実施されている"
+    ],
+    "Weaknesses": [
+      "人間による監督については、より具体的なガイドラインやプロセスが必要である",
+      "故障モードについては、より詳細なフォールバック手順と責任者が必要である"
+    ],
+    "Mission Clarity": "3/4",
+    "Human Oversight": "2/4",
+    "Data Governance": "3/4",
+    "Privacy and Security": "3/4",
+    "Safety and Reliability": "3/4",
+    "Robustness Testing": "3/4",
+    "Failure Mode Coverage": "2/4",
+    "Legal and Policy Alignment": "3/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "2/4",
+    "Questions": [
+      "人間による監督の具体的なガイドラインやプロセスはどこに記載されているか?",
+      "故障モードについてのフォールバック手順と責任者はどのように定義されているか?"
+    ],
+    "Recommended Improvements": [
+      "人間による監督の具体的なガイドラインやプロセスを追加する",
+      "故障モードについてのフォールバック手順と責任者を詳細に定義する"
+    ],
+    "Ethical Concerns": false,
+    "Overall": "6/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  },
+  "medium_disaster_response_oversight_plan": {
+    "Summary": "災害調整要約ツールの監督計画",
+    "Strengths": [
+      "システムの目的と想定利用者の定義が明確である",
+      "データソースの入力方法が記載されている"
+    ],
+    "Weaknesses": [
+      "システムの目的と想定利用者の定義が明確ではない",
+      "データソースの保持期間やマスキング手順について十分な説明がない",
+      "人間による監督のレベルが不明瞭である",
+      "故障モードやリスク低減策について不足している"
+    ],
+    "Mission Clarity": "2/4",
+    "Human Oversight": "1/4",
+    "Data Governance": "2/4",
+    "Privacy and Security": "1/4",
+    "Safety and Reliability": "2/4",
+    "Robustness Testing": "3/4",
+    "Failure Mode Coverage": "1/4",
+    "Legal and Policy Alignment": "2/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "1/4",
+    "Questions": [
+      "システムの目的と想定利用者の定義を明確にする必要がある",
+      "データソースの保持期間やマスキング手順について十分な説明する必要がある"
+    ],
+    "Recommended Improvements": [
+      "システムの目的と想定利用者の定義を明確にする",
+      "データソースの保持期間やマスキング手順について十分な説明をする",
+      "人間による監督のレベルを明瞭にする",
+      "故障モードやリスク低減策について充実する"
+    ],
+    "Ethical Concerns": true,
+    "Overall": "5/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  },
+  "weak_disaster_response_oversight_plan": {
+    "Summary": "災害対応AIの監督に関する草案",
+    "Strengths": [
+      "基本的な目的と利用者の定義がある",
+      "デモで良い要約を出したという実績がある"
+    ],
+    "Weaknesses": [
+      "人間による監督が十分に文書化されていない",
+      "故障モード分析やリスク低減策が不足している",
+      "プライバシーとセキュリティ管理に関する情報が不足している"
+    ],
+    "Mission Clarity": "2/4",
+    "Human Oversight": "1/4",
+    "Data Governance": "1/4",
+    "Privacy and Security": "1/4",
+    "Safety and Reliability": "2/4",
+    "Robustness Testing": "1/4",
+    "Failure Mode Coverage": "1/4",
+    "Legal and Policy Alignment": "3/4",
+    "Deployment Readiness": "2/4",
+    "Operational Risk": "1/4",
+    "Questions": [
+      "人間による監督の具体的な手順はどこにあるか?",
+      "故障モード分析やリスク低減策についての具体的な計画はどこにあるか?"
+    ],
+    "Recommended Improvements": [
+      "人間による監督に関する詳細な文書化",
+      "故障モード分析やリスク低減策の具体的な計画",
+      "プライバシーとセキュリティ管理に関する情報の追加"
+    ],
+    "Ethical Concerns": true,
+    "Overall": "5/10",
+    "Confidence": "3/5",
+    "Decision": "Needs Revision"
+  }
+}
