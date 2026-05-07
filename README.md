@@ -49,8 +49,10 @@ The reviewer should only discuss assurance documentation, governance controls, r
 
 ```text
 defense_ai_assurance_reviewer/
+├── .gitignore
+├── .gitmodules
 ├── README.md
-├── DEFENSE_AI_ASSURANCE_REVIEWER_README.md
+├── requirements.txt
 ├── review_defense_doc.py
 ├── review_schema.py
 ├── compare_reviewers.py
@@ -59,22 +61,36 @@ defense_ai_assurance_reviewer/
 │   ├── defense_assurance_rubric.md
 │   └── ml_paper_rubric_summary.md
 ├── sample_docs/
-│   ├── strong_logistics_ai_safety_case.txt
-│   ├── medium_logistics_ai_safety_case.txt
-│   ├── weak_logistics_ai_safety_case.txt
-│   ├── strong_maintenance_model_eval_report.txt
-│   ├── medium_maintenance_model_eval_report.txt
-│   ├── weak_maintenance_model_eval_report.txt
-│   ├── strong_disaster_response_oversight_plan.txt
-│   ├── medium_disaster_response_oversight_plan.txt
-│   └── weak_disaster_response_oversight_plan.txt
+│   ├── English/
+│   │   ├── strong_logistics_ai_safety_case.txt
+│   │   ├── medium_logistics_ai_safety_case.txt
+│   │   ├── weak_logistics_ai_safety_case.txt
+│   │   ├── strong_maintenance_model_eval_report.txt
+│   │   ├── medium_maintenance_model_eval_report.txt
+│   │   ├── weak_maintenance_model_eval_report.txt
+│   │   ├── strong_disaster_response_oversight_plan.txt
+│   │   ├── medium_disaster_response_oversight_plan.txt
+│   │   └── weak_disaster_response_oversight_plan.txt
+│   └── Japanese/
+│       ├── strong_logistics_ai_safety_case.txt
+│       ├── medium_logistics_ai_safety_case.txt
+│       ├── weak_logistics_ai_safety_case.txt
+│       ├── strong_maintenance_model_eval_report.txt
+│       ├── medium_maintenance_model_eval_report.txt
+│       ├── weak_maintenance_model_eval_report.txt
+│       ├── strong_disaster_response_oversight_plan.txt
+│       ├── medium_disaster_response_oversight_plan.txt
+│       └── weak_disaster_response_oversight_plan.txt
 ├── metadata/
-│   └── sample_doc_labels.json
+│   ├── sample_doc_labels.json
+│   └── sample_doc_labels_japanese.json
 ├── outputs/
-│   ├── defense_reviews.json
-│   ├── ml_baseline_reviews.json
-│   ├── comparison_summary.json
-│   └── <run_id>/
+│   ├── 20260504T151137Z_ollama_llama3.1-8b/
+│   │   ├── defense_reviews.json
+│   │   ├── ml_baseline_reviews.json
+│   │   ├── comparison_summary.json
+│   │   └── run_metadata.json
+│   └── llama3.1-8b-test-run2-2/
 │       ├── defense_reviews.json
 │       ├── ml_baseline_reviews.json
 │       ├── comparison_summary.json
@@ -127,7 +143,7 @@ Validation checks include:
 - Integer score fields and valid ranges.
 - Valid `Decision` values.
 
-The validator safely coerces integer-like floats, such as `7.0`, to integers. It does not coerce ambiguous values such as string scores.
+The validator safely coerces integer-like floats, such as `7.0`, and valid rating strings, such as `7/10` or `3.5/4`, into the integer schema used internally. It does not coerce ambiguous values such as plain string scores like `"7"`.
 
 ### `compare_reviewers.py`
 
@@ -135,12 +151,13 @@ Runs both reviewers over every sample document and writes comparison outputs.
 
 Main responsibilities:
 
-- Loads document labels from `metadata/sample_doc_labels.json`.
+- Loads document labels from `metadata/sample_doc_labels.json` for English or `metadata/sample_doc_labels_japanese.json` for Japanese.
 - Reviews each sample document with the defense rubric.
 - Reviews each sample document with the ML baseline rubric.
 - Counts how many known issues are detected by the defense review text.
 - Saves complete review JSON files, a comparison summary, and per-run metadata.
 - Writes both top-level latest-result files and a dedicated `outputs/<run_id>/` folder for each comparison run.
+- Supports `--en`, `--jp`, and `--language` so the same workflow can run against either corpus.
 
 ### `rubrics/defense_assurance_rubric.md`
 
@@ -177,17 +194,17 @@ This baseline is included to show why a generic ML-paper rubric is not ideal for
 
 ### `sample_docs/`
 
-Contains nine fictional assurance documents:
+Contains two parallel sets of fictional assurance documents:
 
 - 3 logistics AI safety cases
 - 3 non-combat vehicle maintenance model evaluation reports
 - 3 disaster-response oversight plans
 
-Each domain has a strong, medium, and weak example.
+`sample_docs/English/` contains the original nine English documents. `sample_docs/Japanese/` contains nine Japanese documents with matching document IDs and the same strong, medium, and weak structure. The Japanese documents are synthetic and focus on three non-combat Japanese defense support situations selected from the broader topic list: logistics prioritization, non-combat vehicle maintenance prediction, and disaster-response coordination.
 
-### `metadata/sample_doc_labels.json`
+### `metadata/`
 
-Stores expected quality labels and known issues for each sample document.
+Stores expected quality labels and known issues for each sample corpus. `sample_doc_labels.json` describes the English corpus, and `sample_doc_labels_japanese.json` describes the Japanese corpus.
 
 Each record has this shape:
 
@@ -208,15 +225,28 @@ Each record has this shape:
 
 ### `outputs/`
 
-Stores generated experiment outputs. These files can be regenerated by running `compare_reviewers.py`.
+Stores generated experiment outputs. The current local workspace includes two saved Ollama run folders:
+
+- `outputs/llama3.1-8b-test-run2-2/`: English corpus run with `llama3.1:8b`.
+- `outputs/20260504T151137Z_ollama_llama3.1-8b/`: Japanese corpus run with `llama3.1:8b`.
+
+The `outputs/` directory is listed in `.gitignore`, so newly generated outputs are treated as local experiment artifacts unless they are explicitly force-added.
 
 ### `report.md`
 
 Short project report covering the motivation, relationship to The AI Scientist, dataset, rubric, method, experiment, limitations, safety boundary, future work, and citations.
 
+### `tests/`
+
+Contains unit tests for schema validation, JSON repair behavior, language-specific metadata, output run folder creation, and run metadata construction.
+
+### `requirements.txt`
+
+Lists optional Python packages for cloud LLM providers and test/development workflows. Mock mode and Ollama mode only use the Python standard library from this repository.
+
 ### `external/AI-Scientist/`
 
-Local reference copy of The AI Scientist project. This proof of concept does not need to modify those files. The relevant conceptual reference is the Automated Reviewer flow in:
+Local reference copy of The AI Scientist project, configured as a git submodule in `.gitmodules`. This proof of concept does not need to modify those files. The relevant conceptual reference is the Automated Reviewer flow in:
 
 ```text
 external/AI-Scientist/ai_scientist/perform_review.py
@@ -246,6 +276,8 @@ Quality levels:
 - `strong`: clear purpose, explicit oversight, concrete evaluation evidence, documented risks, privacy/security controls, deployment criteria, and limitations.
 - `medium`: partially documented controls with gaps in testing, escalation, rollback, privacy, or metrics.
 - `weak`: missing or vague oversight, weak evaluation, poor failure-mode coverage, incomplete data governance, and unclear readiness criteria.
+
+The English and Japanese corpora share matching document IDs, so `compare_reviewers.py` can reuse the same comparison logic while switching document text and metadata with `--en`, `--jp`, or `--language`.
 
 ## Review Output Schema
 
@@ -277,9 +309,9 @@ A defense review returns JSON like:
 }
 ```
 
-All returned and saved rating fields use `value/max` strings so the scale is visible everywhere. The validator accepts model responses with plain integers or matching `value/max` strings, then normalizes them to the display format.
+All returned and saved rating fields use `value/max` strings so the scale is visible everywhere. The validator accepts model responses with plain integers, integer `value/max` strings, and half-point `value/max` strings such as `"3.5/4"`. Half-point ratings are rounded onto the required integer schema before being normalized to the display format.
 
-The JSON parser also repairs a common local-LLM formatting mistake where a model returns an unquoted rating fraction such as `"Overall": 7/10`; it converts that to `"Overall": "7/10"` before validation.
+The JSON parser also repairs common local-LLM formatting mistakes. It quotes unquoted rating fractions such as `"Overall": 7/10`, preserves decimal fractions such as `"Mission Clarity": 3.5/4`, and strips `//` line comments that models sometimes add inside JSON objects before validation.
 
 Validation catches examples such as:
 
@@ -305,7 +337,23 @@ outputs/
     └── run_metadata.json
 ```
 
-The top-level JSON files are compatibility copies from the latest comparison run. Each timestamped run folder directly under `outputs/` preserves one complete run with metadata.
+The top-level JSON files are compatibility copies from the latest comparison run and are created by `compare_reviewers.py`. Each run folder directly under `outputs/` preserves one complete run with metadata. Because `outputs/` is gitignored, a fresh clone may not include top-level latest-result files until the comparison script is run.
+
+The current local workspace includes these complete saved runs:
+
+```text
+outputs/
+├── 20260504T151137Z_ollama_llama3.1-8b/
+│   ├── defense_reviews.json
+│   ├── ml_baseline_reviews.json
+│   ├── comparison_summary.json
+│   └── run_metadata.json
+└── llama3.1-8b-test-run2-2/
+    ├── defense_reviews.json
+    ├── ml_baseline_reviews.json
+    ├── comparison_summary.json
+    └── run_metadata.json
+```
 
 ### `outputs/defense_reviews.json`
 
@@ -335,10 +383,10 @@ Example row:
 {
   "document_id": "weak_maintenance_model_eval_report",
   "expected_quality": "weak",
-  "ml_overall": "6/10",
-  "defense_overall": "4/10",
-  "defense_decision": "Not Ready",
-  "known_issues_found": 2,
+  "ml_overall": "2/10",
+  "defense_overall": "2/10",
+  "defense_decision": "Needs Revision",
+  "known_issues_found": 4,
   "known_issues_total": 4
 }
 ```
@@ -361,6 +409,9 @@ Example metadata shape:
   "temperature": 0.1,
   "max_retries": 2,
   "retry_temperature": null,
+  "document_language": "en",
+  "sample_docs_dir": "sample_docs/English",
+  "metadata_file": "metadata/sample_doc_labels.json",
   "document_count": 9,
   "document_ids": [
     "strong_logistics_ai_safety_case",
@@ -390,6 +441,9 @@ Real LLM mode requires one of these provider setups:
 - Ollama, default: Ollama running locally with an installed model such as `llama3.2`.
 - OpenAI: `openai` Python package and `OPENAI_API_KEY`.
 - Gemini: `google-genai` Python package and `GEMINI_API_KEY`.
+- Optional test/development dependency: `pytest`. The standard-library `unittest` runner also works.
+
+The optional Python package requirements are listed in `requirements.txt`.
 
 If you are using the included virtual environment, activate it first:
 
@@ -436,16 +490,19 @@ From this project folder:
 
 ```bash
 cd /Users/sora/defense_ai_assurance_reviewer
-python3 review_defense_doc.py --doc sample_docs/weak_logistics_ai_safety_case.txt
+python3 review_defense_doc.py \
+  --doc sample_docs/English/weak_logistics_ai_safety_case.txt \
+  --mock
 ```
 
-By default, this uses local Ollama with `llama3.2`. Use `--mock` if you want a deterministic no-LLM test.
+This uses deterministic mock mode, so it does not require API keys or a running local LLM. If you omit `--mock`, the default provider is local Ollama with `llama3.2`.
 
 Save a single review to a file:
 
 ```bash
 python3 review_defense_doc.py \
-  --doc sample_docs/weak_logistics_ai_safety_case.txt \
+  --doc sample_docs/English/weak_logistics_ai_safety_case.txt \
+  --mock \
   --output outputs/weak_logistics_single_review.json
 ```
 
@@ -470,6 +527,8 @@ The printed `Run folder:` line shows the exact run directory for that execution.
 
 Ollama, OpenAI, and Gemini responses are parsed, schema-validated, and retried when the model returns malformed JSON or a review that does not match the selected rubric.
 
+Before retrying, the parser applies narrow repairs for common local-model output issues, including unquoted rating fractions, half-point rating fractions, and `//` comments inside JSON. Responses that still fail parsing or schema validation are sent through the repair-prompt retry flow.
+
 Retry behavior:
 
 - `--max-retries 2` means one initial attempt plus up to two repair attempts.
@@ -481,7 +540,7 @@ Run one document with the default local Ollama model:
 
 ```bash
 python3 review_defense_doc.py \
-  --doc sample_docs/strong_maintenance_model_eval_report.txt
+  --doc sample_docs/English/strong_maintenance_model_eval_report.txt
 ```
 
 Run the full comparison with default Ollama:
@@ -494,7 +553,7 @@ Use another installed Ollama model:
 
 ```bash
 python3 review_defense_doc.py \
-  --doc sample_docs/strong_maintenance_model_eval_report.txt \
+  --doc sample_docs/English/strong_maintenance_model_eval_report.txt \
   --provider ollama \
   --model mistral
 ```
@@ -515,7 +574,7 @@ Review one document with OpenAI:
 
 ```bash
 python3 review_defense_doc.py \
-  --doc sample_docs/strong_maintenance_model_eval_report.txt \
+  --doc sample_docs/English/strong_maintenance_model_eval_report.txt \
   --provider openai \
   --model gpt-4o-mini
 ```
@@ -524,7 +583,7 @@ Review one document with Gemini:
 
 ```bash
 python3 review_defense_doc.py \
-  --doc sample_docs/strong_maintenance_model_eval_report.txt \
+  --doc sample_docs/English/strong_maintenance_model_eval_report.txt \
   --provider gemini \
   --model gemini-2.0-flash
 ```
@@ -561,7 +620,7 @@ Single-document reviewer:
 
 ```bash
 python3 review_defense_doc.py \
-  --doc PATH_TO_DOCUMENT.txt \
+  --doc sample_docs/English/PATH_TO_DOCUMENT.txt \
   --rubric defense \
   --provider ollama \
   --model llama3.2 \
@@ -588,15 +647,29 @@ Dataset comparison:
 python3 compare_reviewers.py \
   --provider ollama \
   --model llama3.2 \
+  --en \
   --temperature 0.1 \
   --max-retries 2 \
   --output-dir outputs
+```
+
+Run the Japanese sample corpus:
+
+```bash
+python3 compare_reviewers.py \
+  --provider ollama \
+  --model llama3.2 \
+  --jp \
+  --run-name japanese-ollama-run
 ```
 
 Options:
 
 - `--provider`: `ollama`, `mock`, `openai`, or `gemini`. Defaults to `ollama`.
 - `--model`: model name for Ollama, OpenAI, or Gemini mode. Defaults to `llama3.2` for Ollama, `gpt-4o-mini` for OpenAI/mock, and `gemini-2.0-flash` for Gemini.
+- `--language`: sample corpus language, either `en` or `jp`. Defaults to `en`.
+- `--en`: alias for `--language en`.
+- `--jp`: alias for `--language jp`.
 - `--temperature`: model temperature for real LLM mode.
 - `--max-retries`: number of repair attempts for malformed or schema-invalid real LLM responses.
 - `--retry-temperature`: optional temperature for retry/repair attempts.
@@ -626,15 +699,29 @@ The proof of concept is considered successful if it includes:
 - A comparison against an ML-paper-style baseline.
 - A short report explaining method, results, limitations, and citations.
 
-## Current Mock Results
+## Current Saved Results
 
-The existing mock comparison outputs show the expected broad pattern:
+The current saved output folders are Ollama `llama3.1:8b` runs, not mock runs. The best English result file to include in a report is:
+
+```text
+outputs/llama3.1-8b-test-run2-2/comparison_summary.json
+```
+
+That English run shows this broad defense-review score pattern:
 
 ```text
 Expected quality   Defense overall pattern
-Weak               4/10-5/10
-Medium             6/10-7/10
-Strong             9/10-10/10
+Weak               2/10
+Medium             5/10-6/10
+Strong             6/10-7/10
+```
+
+The same folder also contains `defense_reviews.json`, `ml_baseline_reviews.json`, and `run_metadata.json`. Use `defense_reviews.json` for example assurance feedback, `ml_baseline_reviews.json` for contrast with the paper-style baseline, and `run_metadata.json` for provider/model/run settings.
+
+The saved Japanese run is:
+
+```text
+outputs/20260504T151137Z_ollama_llama3.1-8b/
 ```
 
 The ML baseline scores are less domain-sensitive because the baseline evaluates the documents as if they were AI research papers rather than assurance artifacts.
