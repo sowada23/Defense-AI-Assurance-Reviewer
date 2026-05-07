@@ -61,7 +61,7 @@ defense_ai_assurance_reviewer/
 │   ├── defense_assurance_rubric.md
 │   └── ml_paper_rubric_summary.md
 ├── sample_docs/
-│   ├── English/
+│   ├── EN/
 │   │   ├── strong_logistics_ai_safety_case.txt
 │   │   ├── medium_logistics_ai_safety_case.txt
 │   │   ├── weak_logistics_ai_safety_case.txt
@@ -71,7 +71,7 @@ defense_ai_assurance_reviewer/
 │   │   ├── strong_disaster_response_oversight_plan.txt
 │   │   ├── medium_disaster_response_oversight_plan.txt
 │   │   └── weak_disaster_response_oversight_plan.txt
-│   └── Japanese/
+│   └── JP/
 │       ├── strong_logistics_ai_safety_case.txt
 │       ├── medium_logistics_ai_safety_case.txt
 │       ├── weak_logistics_ai_safety_case.txt
@@ -85,12 +85,12 @@ defense_ai_assurance_reviewer/
 │   ├── sample_doc_labels.json
 │   └── sample_doc_labels_japanese.json
 ├── outputs/
-│   ├── 20260504T151137Z_ollama_llama3.1-8b/
+│   ├── JP/
 │   │   ├── defense_reviews.json
 │   │   ├── ml_baseline_reviews.json
 │   │   ├── comparison_summary.json
 │   │   └── run_metadata.json
-│   └── llama3.1-8b-test-run2-2/
+│   └── EN/
 │       ├── defense_reviews.json
 │       ├── ml_baseline_reviews.json
 │       ├── comparison_summary.json
